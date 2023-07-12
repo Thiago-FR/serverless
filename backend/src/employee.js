@@ -16,6 +16,7 @@ export const create = async (e) => {
         email,
         emailDoGestor,
         dataDeAdmissao,
+        dataDeRecisao,
         cargo
     } = JSON.parse(e.body);
 
@@ -26,6 +27,7 @@ export const create = async (e) => {
             email,
             emailDoGestor,
             dataDeAdmissao,
+            dataDeRecisao,
             cargo
         }
     });
