@@ -1,0 +1,30 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  binaryTargets = ["native", "rhel-openssl-1.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Status {
+  ativo
+  inativo
+}
+
+model Employee {
+  matricula         Int       @id        @default(autoincrement())
+  status            Status
+  nome              String
+  email             String
+  emailDoGestor     String
+  dataDeAdmissao    DateTime
+  dataDeRecisao     DateTime? @db.Timestamp
+  cargo             String
+
+  @@map("employee")
+}

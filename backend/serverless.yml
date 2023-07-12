@@ -1,0 +1,24 @@
+app: serverless-kpi
+service: serverless-kpi
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+
+functions:
+  user-findAll:
+    handler: src/employee.findAll
+    events:
+      - httpApi:
+          path: /employees
+          method: get
+  user-create:
+    handler: src/employee.create
+    events:
+      - httpApi:
+          path: /employees
+          method: post
+
+plugins:
+  - serverless-offline
