@@ -16,6 +16,15 @@ enum Status {
   inativo
 }
 
+model Role {
+  id        Int               @id        @default(autoincrement())
+  role      String
+  employee  Employee[]
+
+
+  @@map("role")
+}
+
 model Employee {
   matricula         Int       @id        @default(autoincrement())
   status            Status
@@ -24,7 +33,8 @@ model Employee {
   emailDoGestor     String
   dataDeAdmissao    DateTime
   dataDeRecisao     DateTime? @db.Timestamp
-  cargo             String
+  role              Role      @relation(fields: [roleId], references: [id])
+  roleId            Int
 
   @@map("employee")
 }

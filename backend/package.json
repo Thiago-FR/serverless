@@ -6,6 +6,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "db:reset": "npx prisma migrate dev --name create-table",
     "dev": "npx serverless offline",
     "predeploy": "npx prisma generate",
     "deploy": "npx serverless deploy --verbose"

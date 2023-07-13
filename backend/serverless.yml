@@ -7,14 +7,20 @@ provider:
   runtime: nodejs18.x
 
 functions:
-  user-findAll:
-    handler: src/employee.findAll
+  login:
+    handler: src/employee/employee_controller.login
     events:
       - httpApi:
-          path: /employees
-          method: get
+          path: /login
+          method: post
+  user-headcount:
+    handler: src/employee/employee_controller.headcountController
+    events:
+      - httpApi:
+          path: /role
+          method: post
   user-create:
-    handler: src/employee.create
+    handler: src/employee/employee_controller.create
     events:
       - httpApi:
           path: /employees

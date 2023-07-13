@@ -168,9 +168,9 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-kpi/dev/1689182271316-2023-07-12T17:17:51.316Z/serverless-kpi.zip"
+          "S3Key": "serverless/serverless-kpi/dev/1689196482067-2023-07-12T21:14:42.067Z/serverless-kpi.zip"
         },
-        "Handler": "src/user.findAll",
+        "Handler": "src/employee.findAll",
         "Runtime": "nodejs18.x",
         "FunctionName": "serverless-kpi-dev-user-findAll",
         "MemorySize": 1024,
@@ -193,9 +193,9 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/serverless-kpi/dev/1689182271316-2023-07-12T17:17:51.316Z/serverless-kpi.zip"
+          "S3Key": "serverless/serverless-kpi/dev/1689196482067-2023-07-12T21:14:42.067Z/serverless-kpi.zip"
         },
-        "Handler": "src/user.create",
+        "Handler": "src/employee.create",
         "Runtime": "nodejs18.x",
         "FunctionName": "serverless-kpi-dev-user-create",
         "MemorySize": 1024,
@@ -211,24 +211,24 @@
         "UserDashcreateLogGroup"
       ]
     },
-    "UserDashfindAllLambdaVersiondYISUVBJ7tIyymdgZa2LTsM3uTpNk4GnjPE9Muf7eo": {
+    "UserDashfindAllLambdaVersionGUV4MusdAEs0PtOvSXxRT8EG7VUXX69J7PFOUkD4gs": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "UserDashfindAllLambdaFunction"
         },
-        "CodeSha256": "ZTwkKyvJ/RlQp3dBFLV1lYDG5gZYreb7TPCNfvBNoBw="
+        "CodeSha256": "ECHbacegRLckEsqCTcLDgr1xLcgEvCqNIbs1XaFz5KE="
       }
     },
-    "UserDashcreateLambdaVersionF4sxJAXyOxDGbEgiNvl4Jt2iMiTsFJSEDrmcFYW90": {
+    "UserDashcreateLambdaVersion5ro1BBmuTSpwxEVuVtw0XyVBR8jngQdaTiYEpMg": {
       "Type": "AWS::Lambda::Version",
       "DeletionPolicy": "Retain",
       "Properties": {
         "FunctionName": {
           "Ref": "UserDashcreateLambdaFunction"
         },
-        "CodeSha256": "ZTwkKyvJ/RlQp3dBFLV1lYDG5gZYreb7TPCNfvBNoBw="
+        "CodeSha256": "ECHbacegRLckEsqCTcLDgr1xLcgEvCqNIbs1XaFz5KE="
       }
     },
     "HttpApi": {
@@ -305,13 +305,13 @@
         "TimeoutInMillis": 30000
       }
     },
-    "HttpApiRouteGetUsers": {
+    "HttpApiRouteGetEmployees": {
       "Type": "AWS::ApiGatewayV2::Route",
       "Properties": {
         "ApiId": {
           "Ref": "HttpApi"
         },
-        "RouteKey": "GET /users",
+        "RouteKey": "GET /employees",
         "Target": {
           "Fn::Join": [
             "/",
@@ -380,13 +380,13 @@
         "TimeoutInMillis": 30000
       }
     },
-    "HttpApiRoutePostUsers": {
+    "HttpApiRoutePostEmployees": {
       "Type": "AWS::ApiGatewayV2::Route",
       "Properties": {
         "ApiId": {
           "Ref": "HttpApi"
         },
-        "RouteKey": "POST /users",
+        "RouteKey": "POST /employees",
         "Target": {
           "Fn::Join": [
             "/",
@@ -414,7 +414,7 @@
     "UserDashfindAllLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "UserDashfindAllLambdaVersiondYISUVBJ7tIyymdgZa2LTsM3uTpNk4GnjPE9Muf7eo"
+        "Ref": "UserDashfindAllLambdaVersionGUV4MusdAEs0PtOvSXxRT8EG7VUXX69J7PFOUkD4gs"
       },
       "Export": {
         "Name": "sls-serverless-kpi-dev-UserDashfindAllLambdaFunctionQualifiedArn"
@@ -423,7 +423,7 @@
     "UserDashcreateLambdaFunctionQualifiedArn": {
       "Description": "Current Lambda function version",
       "Value": {
-        "Ref": "UserDashcreateLambdaVersionF4sxJAXyOxDGbEgiNvl4Jt2iMiTsFJSEDrmcFYW90"
+        "Ref": "UserDashcreateLambdaVersion5ro1BBmuTSpwxEVuVtw0XyVBR8jngQdaTiYEpMg"
       },
       "Export": {
         "Name": "sls-serverless-kpi-dev-UserDashcreateLambdaFunctionQualifiedArn"
