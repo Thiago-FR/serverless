@@ -8,41 +8,57 @@ export const findFirstUserService = async (email) => {
 
 const headcountAndTurnover = async (user, mes, ano, active='Active') => {
     const day = active === 'Active' ? '01' : '31'
-    const employeeActive = await getTerminationRepository(user, `${ano}-${mes}-${day}`);
+    const employee = await getTerminationRepository(user, `${ano}-${mes}-${day}`);
     
-    if (employeeActive.length) {
-        const employeeActiveAll = employeeActive.map(async(element) => await headcountAndTurnover(element, mes, ano, active))
+    if (employee.length) {
+        const employeeAll = employee.map(async(element) => await headcountAndTurnover(element, mes, ano, active));
 
-        const resultEmployeeActiveAll = await Promise.all(employeeActiveAll)
+        const resultEmployeeAll = await Promise.all(employeeAll);
 
-        resultEmployeeActiveAll.forEach((element) => employeeActive.push(...element))
+        resultEmployeeAll.forEach((element) => employee.push(...element));
     }  
 
-    return employeeActive
+    return employee;
 }
 
 export const headcountService = async (data) => {
     const { user, ano } = data;
     
-    const all = [];
+    const headcount = [];
+    const turnover = [];
 
     for (let i = 1; i <= 12; i += 1) {
-        const employeeActive = await headcountAndTurnover(user, i, ano, 'Active')
-        const employeeInactive = await headcountAndTurnover(user, i, ano, 'Inactive')
+        const employeeActive = await headcountAndTurnover(user, i, ano, 'Active');
+        const employeeInactive = await headcountAndTurnover(user, i, ano, 'Inactive');
 
-        const headcount = Math.round((employeeActive.length + employeeInactive.length) / 2);
-        const turnover = parseFloat((employeeInactive.length / headcount).toFixed(4))
+        const headcountCount = Math.round((employeeActive.length + employeeInactive.length) / 2);
+        const turnoverCount = parseFloat((employeeInactive.length / headcountCount).toFixed(4));
 
-        all.push({
-            mes: i,
-            headcount,
-            turnover
-        })
+        headcount.push({
+            x: i,
+            y: headcountCount,
+        });
+
+        turnover.push({
+            x: i,
+            y: turnoverCount,
+        });
     }
 
-    const result = await Promise.all(all);
+    await Promise.all(headcount);
 
-    return result;
+    return {
+        headcount: {
+            id: ano,
+            color: "hsl(291, 70%, 50%)",
+            data: headcount
+        },
+        turnover: {
+            id: ano,
+            color: "hsl(166, 70%, 50%)",
+            data: turnover
+        }
+    };
 }
 
 export const createService = async (data) => {

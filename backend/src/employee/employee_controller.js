@@ -28,7 +28,7 @@ export const headcountController = async (e) => {
 
     return {
         statusCode: 200,
-        body: JSON.stringify({ "Actives: ": result })
+        body: JSON.stringify({ result })
     };    
 }
 
