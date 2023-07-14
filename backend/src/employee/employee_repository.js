@@ -14,23 +14,20 @@ export const findFirstUserRepository = async (email) => {
 }
 
 export const getTerminationRepository = async (user, dataDeRecisao) => {
-    const employee = await prismaClientDB.employee.count({
-        where: {
-            OR: [
-                { emailDoGestor: user.email },
-                { roleId: { gt: user.roleId }},
-            ],
-            AND: [
-                { dataDeAdmissao : { lte: new Date(dataDeRecisao) }},
-                { OR: [
-                    { dataDeRecisao : { equals: null }},
-                    { dataDeRecisao: { gt: new Date(dataDeRecisao)} }
-                ]}
-            ]
-        },
-    });
-
-    return employee;
+    return new Promise((resolve) => resolve(
+        prismaClientDB.employee.findMany({
+            where: {
+                AND: [
+                    { emailDoGestor: user.email },
+                    { dataDeAdmissao : { lte: new Date(dataDeRecisao) }},
+                    { OR: [
+                        { dataDeRecisao : { equals: null }},
+                        { dataDeRecisao: { gt: new Date(dataDeRecisao)} }
+                    ]}
+                ]
+            },
+        })
+    ));
 }
 
 export const createRepository = async (data) => {

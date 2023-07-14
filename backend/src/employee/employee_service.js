@@ -6,17 +6,19 @@ export const findFirstUserService = async (email) => {
     return user;
 }
 
-const headcountAndTurnover = async (user, mes, ano) => {
-    const employeeActive = await getTerminationRepository(user, `${ano}-${mes}-01`);
+const headcountAndTurnover = async (user, mes, ano, active='Active') => {
+    const day = active === 'Active' ? '01' : '31'
+    const employeeActive = await getTerminationRepository(user, `${ano}-${mes}-${day}`);
     
-    const employeeInactive = await getTerminationRepository(user, `${ano}-${mes}-31`);
+    if (employeeActive.length) {
+        const employeeActiveAll = employeeActive.map(async(element) => await headcountAndTurnover(element, mes, ano, active))
 
-    const headcount = Math.round((employeeActive + employeeInactive) / 2);
+        const resultEmployeeActiveAll = await Promise.all(employeeActiveAll)
 
-    return {
-        headcount,
-        turnover: parseFloat((employeeInactive / headcount).toFixed(4))
-    };    
+        resultEmployeeActiveAll.forEach((element) => employeeActive.push(...element))
+    }  
+
+    return employeeActive
 }
 
 export const headcountService = async (data) => {
@@ -25,7 +27,11 @@ export const headcountService = async (data) => {
     const all = [];
 
     for (let i = 1; i <= 12; i += 1) {
-        const { headcount, turnover } = await headcountAndTurnover(user, i, ano);
+        const employeeActive = await headcountAndTurnover(user, i, ano, 'Active')
+        const employeeInactive = await headcountAndTurnover(user, i, ano, 'Inactive')
+
+        const headcount = Math.round((employeeActive.length + employeeInactive.length) / 2);
+        const turnover = parseFloat((employeeInactive.length / headcount).toFixed(4))
 
         all.push({
             mes: i,
@@ -36,7 +42,7 @@ export const headcountService = async (data) => {
 
     const result = await Promise.all(all);
 
-    return result;  
+    return result;
 }
 
 export const createService = async (data) => {

@@ -13,12 +13,14 @@ functions:
       - httpApi:
           path: /login
           method: post
+
   user-headcount:
     handler: src/employee/employee_controller.headcountController
     events:
       - httpApi:
           path: /role
           method: post
+          
   user-create:
     handler: src/employee/employee_controller.create
     events:
