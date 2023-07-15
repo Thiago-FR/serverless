@@ -1,7 +1,7 @@
 import React from 'react';
 import { ResponsiveLine } from '@nivo/line'
 
-function Graphic({ data, legendLeft, legendBottom }) {
+function Graphic({ data, legendLeft, legendBottom, enableArea, curve='natural' }) {
 
   return(
     <>
@@ -17,6 +17,7 @@ function Graphic({ data, legendLeft, legendBottom }) {
               reverse: false
           }}
           yFormat=" >-.2f"
+          curve={curve}
           axisTop={null}
           axisRight={null}
           axisBottom={{
@@ -36,11 +37,15 @@ function Graphic({ data, legendLeft, legendBottom }) {
               legendPosition: 'middle'
           }}
           pointSize={10}
-          pointColor={{ theme: 'background' }}
+          colors={{ scheme: 'category10' }}
+        //   pointColor={{ theme: 'background' }}
+          pointColor="#b32323"
           pointBorderWidth={2}
           pointBorderColor={{ from: 'serieColor' }}
           pointLabelYOffset={-12}
           useMesh={true}
+        //   enablePointLabel={true}
+          enableArea={enableArea}
           legends={[
               {
                   anchor: 'bottom-right',

@@ -55,7 +55,7 @@ export const headcountService = async (data) => {
         },
         turnover: {
             id: ano,
-            color: "hsl(166, 70%, 50%)",
+            color: "hsl(291, 70%, 50%)",
             data: turnover
         }
     };

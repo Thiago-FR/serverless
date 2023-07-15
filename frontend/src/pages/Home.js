@@ -7,6 +7,7 @@ import { getLocalStore } from '../services/localStore';
 import { getData } from '../services/fetchApi';
 
 import { spinner } from '../img';
+import { Toggle } from '../components/Toggle';
 
 const DATA = {
   headcount: {},
@@ -23,7 +24,9 @@ function Home() {
   const navigate = useNavigate();
   const [data, setData] = useState(DATA);
   const [user, setUser] = useState(USER)
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
+  const [graphicsEnableArea, setGraphicsEnableArea] = useState(false)
+  const [graphicsEnableCurve, setGraphicsEnableCurve] = useState(true)
 
   useEffect(() => {
     const userEmail = getLocalStore('email');
@@ -42,7 +45,7 @@ function Home() {
     const { result } = await getData(email, ano)
 
     setData(result)
-    // setIsLoading(false)
+    setIsLoading(false)
   }
  
   return(
@@ -51,27 +54,41 @@ function Home() {
 
       <div className='d-flex'>
         <aside className='leftBar'>
-          <button
-            className='btn btn-primary mt-5 btn-lg'
-            type='button'
-            onClick={() => setUser({ ...user, ano: '2020'})}
-          >
-            2020
-          </button>
-          <button
-            className='btn btn-primary mt-2 btn-lg'
-            type='button'
-            onClick={() => setUser({ ...user, ano: '2021'})}
-          >
-            2021
-          </button>
-          <button
-            className='btn btn-primary mt-2 btn-lg'
-            type='button'
-            onClick={() => setUser({ ...user, ano: '2022'})}
-          >
-            2022
-          </button>
+          <div className='d-flex flex-column m-5'>
+            <button
+              className='btn btn-primary mt-5 btn-lg'
+              type='button'
+              onClick={() => setUser({ ...user, ano: '2020'})}
+            >
+              2020
+            </button>
+            <button
+              className='btn btn-primary mt-2 btn-lg'
+              type='button'
+              onClick={() => setUser({ ...user, ano: '2021'})}
+            >
+              2021
+            </button>
+            <button
+              className='btn btn-primary mt-2 btn-lg'
+              type='button'
+              onClick={() => setUser({ ...user, ano: '2022'})}
+            >
+              2022
+            </button>
+          </div>
+          <div>
+            <Toggle
+              label="Área"
+              toggled={graphicsEnableArea}
+              onClick={setGraphicsEnableArea}
+            />
+            <Toggle
+              label="Curva"
+              toggled={graphicsEnableCurve}
+              onClick={setGraphicsEnableCurve}
+            />
+          </div>
         </aside>
   
         {isLoading
@@ -81,8 +98,22 @@ function Home() {
           </div>
         ) : (
           <main className='d-flex flex-column'>
-            {Object.keys(data.headcount).length > 0 && <Graphic data={[data.headcount]} legendLeft={'Headcount'} legendBottom={'mês'}/>}
-            {Object.keys(data.turnover).length > 0 && <Graphic data={[data.turnover]} legendLeft={'Turnover'} legendBottom={'mês'}/>}
+            {Object.keys(data.headcount).length > 0
+              && <Graphic
+                data={[data.headcount]}
+                legendLeft={'Headcount'}
+                legendBottom={'mês'}
+                enableArea={graphicsEnableArea}
+                curve={graphicsEnableCurve ? 'natural' : 'linear'}
+              />}
+            {Object.keys(data.turnover).length > 0 &&
+              <Graphic
+                data={[data.turnover]}
+                legendLeft={'Turnover'}
+                legendBottom={'mês'}
+                enableArea={graphicsEnableArea}
+                curve={graphicsEnableCurve ? 'natural' : 'linear'}
+              />}
           </main>
         )}
       </div>
