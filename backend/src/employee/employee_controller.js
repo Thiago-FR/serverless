@@ -40,7 +40,7 @@ export const create = async (e) => {
         emailDoGestor,
         dataDeAdmissao,
         dataDeRecisao,
-        roleId
+        cargo
     } = JSON.parse(e.body);
 
     const result = await createService({
@@ -50,7 +50,7 @@ export const create = async (e) => {
         emailDoGestor,
         dataDeAdmissao,
         dataDeRecisao,
-        roleId
+        cargo
     })
 
     return {

@@ -4,9 +4,6 @@ export const findFirstUserRepository = async (email) => {
     const user = await prismaClientDB.employee.findFirst({
         where: {
             email
-        },
-        include: {
-            role: true
         }
     });
 
@@ -38,7 +35,7 @@ export const createRepository = async (data) => {
         emailDoGestor,
         dataDeAdmissao,
         dataDeRecisao,
-        roleId
+        cargo
     } =  data;
 
     const employee = await prismaClientDB.employee.create({
@@ -49,7 +46,7 @@ export const createRepository = async (data) => {
             emailDoGestor,
             dataDeAdmissao,
             dataDeRecisao,
-            roleId
+            cargo
         }
     });
 
