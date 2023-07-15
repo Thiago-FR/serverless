@@ -1,4 +1,4 @@
-export const getData = async ({ email, ano }) => {
+export const getData = async (email, ano) => {
     const data = await fetch('http://localhost:3001/role',
     {
         method: "POST",

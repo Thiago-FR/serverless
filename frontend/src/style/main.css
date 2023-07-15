@@ -44,16 +44,32 @@ header nav a:hover{
 }
 
 main {
-    height: 500px;
+    height: 800px;
+    margin-left: 10px;
+    width: 100vw;
+}
+
+.header {
+    background-color: #e7e6e63d;
+    box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.05);
+}
+
+.leftBar {
+    align-items: center;
+    background-color: #e7e6e63d;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 200px;
 }
 
 .login {
-    height: 320px;
-    width: 500px;
-    margin: 200px auto 0 auto;
     background-color: #e7e6e63d;
     border-radius: 5px;
     box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);
+    height: 320px;
+    margin: 200px auto 0 auto;
+    width: 500px;
 }
 
 .login .img-profile {
@@ -67,15 +83,15 @@ main {
     width: 170px;
 }
 
+.loading {
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .loading-spinner {
     display: flex;
     justify-content: center;
-}
-
-.loading-spinner img {
-    height: 50px;
     margin-top: 5px;
-    width: 50px;
 }
 
 /* @media screen and (max-width: 990px){

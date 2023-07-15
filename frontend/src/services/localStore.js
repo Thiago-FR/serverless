@@ -1,9 +1,13 @@
-export const saveEmail = (email) => {
-    localStorage.setItem('email', email);
+export const saveLocalStore = (key, value) => {
+    localStorage.setItem(key, value);
 }
 
-export const getEmail = (email) => {
-    const result = localStorage.getItem(email);
+export const getLocalStore = (key) => {
+    const result = localStorage.getItem(key);
 
     return result;
+}
+
+export const cleanLocalStore = () => {
+    localStorage.clear();
 }
