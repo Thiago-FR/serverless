@@ -36,15 +36,16 @@ function Login({ email, setEmail }) {
                 <img alt="foto perfil" src={imgProfile[Math.floor((Math.random() * (4 - 0)) * 1)]}/>
             </div>
             <div className='input-group'>
-                <span class="input-group-text" id="basic-addon1">@</span>
+                <span className="input-group-text" id="basic-addon1">@</span>
                 <input
                     className={`form-control ${isValidEmail ? '' : 'is-invalid'}`}
                     type='text'
                     value={email}
                     onChange={({ target }) => setEmail(target.value)}
+                    data-testid='input-email'
                 />
-                <div id="validationServerUsernameFeedback" class="invalid-feedback">
-                    E-mail inválido, tente novamente!.
+                <div id="validationServerUsernameFeedback" className="invalid-feedback">
+                    E-mail inválido, tente novamente!
                 </div>
             </div>
             {!isLoading ? (

@@ -1,5 +1,5 @@
-import { auth, getData } from '../services/fetchApi.js';
-  import { authMock, getDataMock } from './mocks/fetchApi.mock.js';
+import { auth, getData } from '../services/fetchApi';
+import { authMock, getDataMock } from './mocks/fetchApi.mock';
   
   describe('Test FetchApi Auth', () => {
     const EMAIL = 'teste@teste.com';
