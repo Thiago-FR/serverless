@@ -6,6 +6,7 @@ export const getData = async (email, ano) => {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
+            'Access-Control-Allow-Credentials': true,
             "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Headers": "*",
             "Access-Control-Allow-Methods": "POST, GET, OPTIONS"
@@ -25,7 +26,10 @@ export const auth = async (email) => {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            'Access-Control-Allow-Origin':'*'
+            'Access-Control-Allow-Credentials': true,
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Headers": "*",
+            "Access-Control-Allow-Methods": "POST, GET, OPTIONS"
         },
         body: JSON.stringify({
             email,
