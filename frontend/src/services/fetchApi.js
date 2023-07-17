@@ -7,7 +7,7 @@ export const getData = async (email, ano) => {
         headers: {
             "Content-Type": "application/json",
             "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Credentials": true
+            "Access-Control-Allow-Methods": "*"
         },
         body: JSON.stringify({
             email,
@@ -25,13 +25,13 @@ export const auth = async (email) => {
         headers: {
             "Content-Type": "application/json",
             "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Credentials": true
+            "Access-Control-Allow-Methods": "*"
         },
         body: JSON.stringify({
             email,
         })
     }).then(response => response.json()).then((data) => data)
-    .catch(() => null);
+    .catch(() => ({ status: 'null' }));
 
     return data;
 }
