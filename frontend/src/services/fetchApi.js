@@ -1,5 +1,5 @@
 export const getData = async (email, ano) => {
-    const data = await fetch('http://localhost:3001/role',
+    const data = await fetch(`${process.env.REACT_APP_HOST}/role`,
     {
         method: "POST",
         headers: {
@@ -15,7 +15,7 @@ export const getData = async (email, ano) => {
 }
 
 export const auth = async (email) => {
-    const data = await fetch('http://localhost:3001/login',
+    const data = await fetch(`${process.env.REACT_APP_HOST}/login`,
     {
         method: "POST",
         headers: {
