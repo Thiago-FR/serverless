@@ -11,9 +11,7 @@ function Login({ email, setEmail }) {
     const navigate = useNavigate();
     
     const [isValidEmail, setIsValidEmail] = useState(true)
-    const [isLoading, setIsLoading] = useState(false)
-
-    
+    const [isLoading, setIsLoading] = useState(false)    
 
     const login = async () => {
         setIsLoading(true);
