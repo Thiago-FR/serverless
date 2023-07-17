@@ -1,5 +1,7 @@
+const HOST_ENV = process.env.REACT_APP_HOST;
+
 export const getData = async (email, ano) => {
-    const data = await fetch(`${process.env.REACT_APP_HOST}/role`,
+    const data = await fetch(`${HOST_ENV}/role`,
     {
         method: "POST",
         headers: {
@@ -15,7 +17,7 @@ export const getData = async (email, ano) => {
 }
 
 export const auth = async (email) => {
-    const data = await fetch(`${process.env.REACT_APP_HOST}/login`,
+    const data = await fetch(`${HOST_ENV}/login`,
     {
         method: "POST",
         headers: {
