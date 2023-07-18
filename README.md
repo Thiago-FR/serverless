@@ -8,8 +8,6 @@
 # Sumário
 
 - [Boas vindas ao repositório Serverless - FullStack](#boas-vindas-ao-repositório-serverless)
-- [Para testar o projeto com Deploy](#deploy)
-- [Para testar o projeto com Docker](#testar-o-projeto)
 - [Back-End](#back-end)
   - [O que foi desenvolvido](#o-que-foi-desenvolvido-back)
   - [Conexão com o Banco](#conexao-db)
@@ -28,23 +26,6 @@
   - [Testes desenvolvidos](#tdd-front)
     - [Testes](#tdd-1-front)
 - [Protótipo](#prototipo)
-
----
-
-## Para testar o projeto com Docker: <a name="testar-o-projeto"></a>
-
-1. Clone o repositório
-  * `https://github.com/Thiago-FR/desafio-tecnico-trybe.git`.
-  * Entre na pasta do repositório que você acabou de clonar
-
-2. Rode o comando docker-compose [**É Necessário ter o docker-compose v1.29 instalado!**]
-  * `docker-compose up -d --build`
-
-3. Ao final da containerização você pode checar os container **db**, **app_backend**  e **app_end**:
-  * `docker ps`
-
-4. Para descer os container basta rodar:
-  * `docker-compose down --remove-orphans`
 
 ---
 
