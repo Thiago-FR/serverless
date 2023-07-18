@@ -1,0 +1,10 @@
+{
+    "error": {
+        "email": {
+            "message": "E-mail inválido, tente novamente!"
+        },
+        "default": {
+            "message": "Não foi possível acessar o servidor, tente novamente mais tarde!"
+        }
+    }
+}

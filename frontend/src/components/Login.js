@@ -4,24 +4,32 @@ import { useNavigate } from 'react-router-dom';
 import { auth } from '../services/fetchApi';
 import { saveLocalStore } from '../services/localStore';
 import { profile1, profile2, profile3, profile4, spinner } from '../img';
+import data from './data/data.json';
 
 const imgProfile = [profile1, profile2, profile3, profile4]
+
 
 function Login({ email, setEmail }) {
     const navigate = useNavigate();
     
-    const [isValidEmail, setIsValidEmail] = useState(true)
-    const [isLoading, setIsLoading] = useState(false)    
+    const [isValidEmail, setIsValidEmail] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
+    const [validadeError, setValidadeError] = useState(data.error.email.message)
 
     const login = async () => {
         setIsLoading(true);
         const result = await auth(email);
         
         if (result.status === 'ativo') {
+            setValidadeError(data.error.email.message);
             saveLocalStore('email', email);
             saveLocalStore('nome', result.nome);
             return navigate('/home')
         };
+
+        if (result.status === 'null') {
+            setValidadeError(data.error.default.message);
+        }
 
         setIsValidEmail(false);
         setIsLoading(false);
@@ -43,7 +51,7 @@ function Login({ email, setEmail }) {
                     data-testid='input-email'
                 />
                 <div id="validationServerUsernameFeedback" className="invalid-feedback">
-                    E-mail inválido, tente novamente!
+                    {validadeError}
                 </div>
             </div>
             {!isLoading ? (

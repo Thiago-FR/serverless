@@ -17,7 +17,7 @@ const DATA = {
 const USER = {
   nome: '',
   email: '',
-  ano: '2021'
+  ano: '2020'
 }
 
 function Home() {
