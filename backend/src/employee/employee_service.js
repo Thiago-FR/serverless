@@ -1,17 +1,17 @@
-import { createRepository, findFirstUserRepository, getTerminationRepository } from './employee_repository.js';
+const { createRepository, findFirstUserRepository, getTerminationRepository } = require( './employee_repository.js');
 
-export const findFirstUserService = async (email) => {
-    const user = await findFirstUserRepository(email);
+const findFirstUserService = async (db, email) => {
+    const user = await findFirstUserRepository(db, email);
 
     return user;
 }
 
-const headcountAndTurnover = async (user, mes, ano, active='Active') => {
-    const day = active === 'Active' ? '01' : '31'
-    const employee = await getTerminationRepository(user, `${ano}-${mes}-${day}`);
+const headcountAndTurnover = async (db, user, mes, ano, active='Active') => {
+    const day = active === 'Active' ? '01' : '31'    
+    const employee = await getTerminationRepository(db, user, `${ano}-${mes}-${day}`);
     
     if (employee.length) {
-        const employeeAll = employee.map(async(element) => await headcountAndTurnover(element, mes, ano, active));
+        const employeeAll = employee.map(async(element) => await headcountAndTurnover(db, element, mes, ano, active));
 
         const resultEmployeeAll = await Promise.all(employeeAll);
 
@@ -21,26 +21,29 @@ const headcountAndTurnover = async (user, mes, ano, active='Active') => {
     return employee;
 }
 
-export const headcountService = async (data) => {
+const headcountService = async (db, data) => {
     const { user, ano } = data;
     
     const headcount = [];
     const turnover = [];
 
-    for (let i = 1; i <= 12; i += 1) {
-        const employeeActive = await headcountAndTurnover(user, i, ano, 'Active');
-        const employeeInactive = await headcountAndTurnover(user, i, ano, 'Inactive');
+    for (let mes = 1; mes <= 12; mes += 1) {
+        const employeeActive = await headcountAndTurnover(db, user, mes, ano, 'Active');
+        const employeeInactive = await headcountAndTurnover(db, user, mes, ano, 'Inactive');
 
         const headcountCount = Math.round((employeeActive.length + employeeInactive.length) / 2);
         const turnoverCount = parseFloat((employeeInactive.length / headcountCount).toFixed(4));
 
+        const date = new Date(ano, mes - 1, 1)
+        const month = date.toLocaleString('default', { month: 'long' });
+
         headcount.push({
-            x: i,
+            x: month,
             y: headcountCount,
         });
 
         turnover.push({
-            x: i,
+            x: month,
             y: turnoverCount,
         });
     }
@@ -61,8 +64,10 @@ export const headcountService = async (data) => {
     };
 }
 
-export const createService = async (data) => {
-    const employee = await createRepository(data);
+const createService = async (db, data) => {
+    const employee = await createRepository(db, data);
 
     return employee;
 }
+
+module.exports = { findFirstUserService, headcountService, createService }

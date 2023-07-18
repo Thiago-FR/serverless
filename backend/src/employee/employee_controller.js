@@ -1,9 +1,10 @@
-import { createService, findFirstUserService, headcountService } from './employee_service.js'
+const { prismaClientDB } = require('../db/db.js');
+const { createService, findFirstUserService, headcountService } = require('./employee_service.js');
 
-export const login = async (e) => {
+const login = async (e) => {
     const { email } = JSON.parse(e.body);
 
-    const result = await findFirstUserService(email);
+    const result = await findFirstUserService(prismaClientDB.employee, email);
 
     return result ? {
         statusCode: 200,
@@ -14,17 +15,17 @@ export const login = async (e) => {
     };
 }
 
-export const headcountController = async (e) => {
+const headcountController = async (e) => {
     const { email, ano } = JSON.parse(e.body);
 
-    const user = await findFirstUserService(email);
+    const user = await findFirstUserService(prismaClientDB.employee, email);
 
     if (!user) return {
         statusCode: 401,
         body: JSON.stringify({ message: "Acesso não permitido" })
     }
 
-    const result = await headcountService({ user, ano });
+    const result = await headcountService(prismaClientDB.employee, { user, ano });
 
     return {
         statusCode: 200,
@@ -32,7 +33,7 @@ export const headcountController = async (e) => {
     };    
 }
 
-export const create = async (e) => {
+const create = async (e) => {
     const {
         status,
         nome,
@@ -43,7 +44,7 @@ export const create = async (e) => {
         cargo
     } = JSON.parse(e.body);
 
-    const result = await createService({
+    const result = await createService(prismaClientDB.employee, {
         status,
         nome,
         email,
@@ -58,3 +59,5 @@ export const create = async (e) => {
         body: JSON.stringify(result)
     };
 }
+
+module.exports = { login, create, headcountController }

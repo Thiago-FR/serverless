@@ -1,8 +1,8 @@
-import { PrismaClient } from '@prisma/client'
+const { PrismaClient } = require('@prisma/client');
 
-import fs from 'fs'
+const fs =require('fs');
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
 const convertDate = (date) => {
     const [d, m, a] = date.split('/');

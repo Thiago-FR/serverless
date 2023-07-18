@@ -1,7 +1,5 @@
-import { prismaClientDB } from '../db/db.js'
-
-export const findFirstUserRepository = async (email) => {
-    const user = await prismaClientDB.employee.findFirst({
+const findFirstUserRepository = async (db, email) => {
+    const user = await db.findFirst({
         where: {
             email
         }
@@ -10,16 +8,16 @@ export const findFirstUserRepository = async (email) => {
     return user;
 }
 
-export const getTerminationRepository = async (user, dataDeRecisao) => {
+const getTerminationRepository = async (db, user, searchDate) => {
     return new Promise((resolve) => resolve(
-        prismaClientDB.employee.findMany({
+        db.findMany({
             where: {
                 AND: [
                     { emailDoGestor: user.email },
-                    { dataDeAdmissao : { lte: new Date(dataDeRecisao) }},
+                    { dataDeAdmissao : { lte: new Date(searchDate) }},
                     { OR: [
                         { dataDeRecisao : { equals: null }},
-                        { dataDeRecisao: { gt: new Date(dataDeRecisao)} }
+                        { dataDeRecisao: { gt: new Date(searchDate)} }
                     ]}
                 ]
             },
@@ -27,7 +25,7 @@ export const getTerminationRepository = async (user, dataDeRecisao) => {
     ));
 }
 
-export const createRepository = async (data) => {
+const createRepository = async (db, data) => {
     const {
         status,
         nome,
@@ -38,7 +36,7 @@ export const createRepository = async (data) => {
         cargo
     } =  data;
 
-    const employee = await prismaClientDB.employee.create({
+    const employee = await db.create({
         data: {
             status,
             nome,
@@ -52,3 +50,5 @@ export const createRepository = async (data) => {
 
     return employee;
 }
+
+module.exports = { findFirstUserRepository, getTerminationRepository, createRepository }

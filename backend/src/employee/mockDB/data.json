@@ -1,0 +1,44 @@
+{
+    "employees": [
+        {
+            "id": 0,
+            "status": "ativo",
+            "nome": "test1",
+            "email": "test1@teste.com",
+            "emailDoGestor": "",
+            "dataDeAdmissao": "2021-10-06 03:00:00",
+            "dataDeRecisao": null,
+            "cargo": "diretor"
+        },
+        {
+            "id": 1,
+            "status": "ativo",
+            "nome": "test2",
+            "email": "test2@teste.com",
+            "emailDoGestor": "test1@teste.com",
+            "dataDeAdmissao": "2021-08-01 03:00:00",
+            "dataDeRecisao": null,
+            "cargo": "supervisor"
+        },
+        {
+            "id": 2,
+            "status": "ativo",
+            "nome": "test3",
+            "email": "test3@teste.com",
+            "emailDoGestor": "test2@teste.com",
+            "dataDeAdmissao": "2021-09-28 03:00:00",
+            "dataDeRecisao": null,
+            "cargo": "analista"
+        },
+        {
+            "id": 3,
+            "status": "inativo",
+            "nome": "test4",
+            "email": "test4@teste.com",
+            "emailDoGestor": "test2@teste.com",
+            "dataDeAdmissao": "2021-03-26 03:00:00",
+            "dataDeRecisao": "2021-06-17 03:00:00",
+            "cargo": "analista"
+        }
+    ]
+}
