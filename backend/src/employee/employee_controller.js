@@ -16,7 +16,7 @@ const login = async (e) => {
 }
 
 const headcountController = async (e) => {
-    const { email, ano } = JSON.parse(e.body);
+    const { email, year } = JSON.parse(e.body);
 
     const user = await findFirstUserService(prismaClientDB.employee, email);
 
@@ -25,7 +25,7 @@ const headcountController = async (e) => {
         body: JSON.stringify({ message: "Acesso não permitido" })
     }
 
-    const result = await headcountService(prismaClientDB.employee, { user, ano });
+    const result = await headcountService(prismaClientDB.employee, { user, year });
 
     return {
         statusCode: 200,

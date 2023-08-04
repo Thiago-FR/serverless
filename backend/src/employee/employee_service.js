@@ -1,4 +1,5 @@
 const { createRepository, findFirstUserRepository, getTerminationRepository } = require( './employee_repository.js');
+const { getRedis, setRedis } = require('../db/lib/chache.js')
 
 const findFirstUserService = async (db, email) => {
     const user = await findFirstUserRepository(db, email);
@@ -6,12 +7,12 @@ const findFirstUserService = async (db, email) => {
     return user;
 }
 
-const headcountAndTurnover = async (db, user, mes, ano, active='Active') => {
+const headcountAndTurnover = async (db, user, month, year, active='Active') => {
     const day = active === 'Active' ? '01' : '31'    
-    const employee = await getTerminationRepository(db, user, `${ano}-${mes}-${day}`);
+    const employee = await getTerminationRepository(db, user, `${year}-${month}-${day}`);
     
     if (employee.length) {
-        const employeeAll = employee.map(async(element) => await headcountAndTurnover(db, element, mes, ano, active));
+        const employeeAll = employee.map(async(element) => await headcountAndTurnover(db, element, month, year, active));
 
         const resultEmployeeAll = await Promise.all(employeeAll);
 
@@ -22,46 +23,58 @@ const headcountAndTurnover = async (db, user, mes, ano, active='Active') => {
 }
 
 const headcountService = async (db, data) => {
-    const { user, ano } = data;
+    const { user, year } = data;
     
     const headcount = [];
     const turnover = [];
 
-    for (let mes = 1; mes <= 12; mes += 1) {
-        const employeeActive = await headcountAndTurnover(db, user, mes, ano, 'Active');
-        const employeeInactive = await headcountAndTurnover(db, user, mes, ano, 'Inactive');
+    const cacheKey = `user:${user.email}-${year}`;
+    const cacheUser = await getRedis(cacheKey);
+
+    if (cacheUser)
+        return JSON.parse(cacheUser)
+
+    for (let month = 1; month <= 12; month += 1) {
+        const employeeActive = await headcountAndTurnover(db, user, month, year, 'Active');
+        const employeeInactive = await headcountAndTurnover(db, user, month, year, 'Inactive');
 
         const headcountCount = Math.round((employeeActive.length + employeeInactive.length) / 2);
         const turnoverCount = parseFloat((employeeInactive.length / headcountCount).toFixed(4));
 
-        const date = new Date(ano, mes - 1, 1)
-        const month = date.toLocaleString('default', { month: 'long' });
+        const date = new Date(year, month - 1, 1)
+        const monthText = date.toLocaleString('default', { month: 'long' });
 
         headcount.push({
-            x: month,
+            x: monthText,
             y: headcountCount,
         });
 
         turnover.push({
-            x: month,
+            x: monthText,
             y: turnoverCount,
         });
     }
 
     await Promise.all(headcount);
 
-    return {
+    const res = {
         headcount: {
-            id: ano,
+            id: year,
             color: "hsl(291, 70%, 50%)",
             data: headcount
         },
         turnover: {
-            id: ano,
+            id: year,
             color: "hsl(291, 70%, 50%)",
             data: turnover
         }
-    };
+    }
+
+    await setRedis(cacheKey, JSON.stringify(res))
+
+    console.timeEnd()
+
+    return res;
 }
 
 const createService = async (db, data) => {

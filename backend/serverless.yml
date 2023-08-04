@@ -16,7 +16,7 @@ functions:
 
   user-headcount:
     handler: src/employee/employee_controller.headcountController
-    timeout: 30
+    timeout: 45
     events:
       - httpApi:
           path: /role
@@ -24,7 +24,7 @@ functions:
           
   user-create:
     handler: src/employee/employee_controller.create
-    timeout: 30
+    timeout: 45
     events:
       - httpApi:
           path: /employees
