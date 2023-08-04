@@ -1,0 +1,47 @@
+version: '3.9'
+services:
+  frontend:
+        build: ./frontend
+        container_name: app_frontend
+        depends_on:
+          backend:
+            condition: service_healthy
+        environment:
+          REACT_APP_HOST: "http://localhost:3001"
+        ports:
+          - 3000:3000
+        restart: 'always'
+        healthcheck:
+          test: ["CMD", "lsof", "-t", "-i:3000"]  # Caso utilize outra porta interna para o front, altere ela aqui também
+          timeout: 10s
+          retries: 5
+  backend:
+    build: ./backend
+    container_name: app_backend
+    links:
+      - db_postgres
+    ports:
+      - 3001:3001
+    depends_on:
+      db_postgres:
+        condition: service_healthy
+    environment:
+        PORT: 3001
+        DATABASE_URL: "postgresql://postgres:postgres@localhost:5432/mydb?schema=public"
+    healthcheck:
+      test: ["CMD", "lsof", "-t", "-i:3001"] # Caso utilize outra porta interna para o back, altere ela aqui também
+      timeout: 10s
+      retries: 5
+
+  db_postgres:
+    image: postgres:14.2-alpine
+    container_name: db
+    environment:
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      timeout: 10s
+      retries: 5
+    restart: always

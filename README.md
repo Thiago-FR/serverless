@@ -73,6 +73,9 @@ DATABASE_URL="postgresql://user:password@host:port/mydb?schema=public""
 4. Instale as dependências
   * `npm install`
 
+5. Popule o banco de dados
+  * `npm run db:reset`
+
 5. Inicie a API.
   * `npm run dev`
 
@@ -99,7 +102,7 @@ Body
 ```json
   { 
     "email": "",
-    "ano": "",
+    "year": "",
   }
  ```
 
