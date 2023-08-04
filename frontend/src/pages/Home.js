@@ -17,7 +17,7 @@ const DATA = {
 const USER = {
   nome: '',
   email: '',
-  ano: '2020'
+  year: '2020'
 }
 
 const GRAPHIC_DETAIL = {
@@ -45,13 +45,13 @@ function Home() {
 
     setUser({ ...user, email: userEmail, nome: userNome });
 
-    handleData(userEmail, user.ano)
-  }, [user.ano])
+    handleData(userEmail, user.year)
+  }, [user.year])
 
-  const handleData = async(email, ano) => {
+  const handleData = async(email, year) => {
     setIsLoading(true)
 
-    const { result } = await getData(email, ano)
+    const { result } = await getData(email, year)
 
     setData(result)
     setIsLoading(false)

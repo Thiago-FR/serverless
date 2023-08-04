@@ -9,14 +9,14 @@ const POST = {
     },
 }
 
-export const getData = async (email, ano) => {
+export const getData = async (email, year) => {
     const data = await fetch(`${HOST_ENV}/role`,
     {
         ...POST,
 
         body: JSON.stringify({
             email,
-            ano
+            year
         })
     }).then(response => response.json()).then((data) => data);
 

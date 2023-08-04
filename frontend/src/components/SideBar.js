@@ -18,7 +18,7 @@ function SideBar({
                         <button
                             className='btn btn-primary mt-1 btn-lg'
                             type='button'
-                            onClick={() => setUser({ ...user, ano: year })}
+                            onClick={() => setUser({ ...user, year })}
                         >
                             {year}
                         </button>
