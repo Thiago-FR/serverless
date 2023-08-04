@@ -1,7 +1,18 @@
 import React from 'react';
 import { ResponsiveLine } from '@nivo/line'
 
-function Graphic({ data, legendLeft, legendBottom, enableArea, curve='natural' }) {
+function Graphic({
+  data,
+  legendLeft,
+  legendBottom,
+  enableArea,
+  curve='natural',
+  pointColor='#b32323',
+  enableGridX=true,
+  enableGridY=true,
+  enablePoints=true,
+  enablePointLabel=false
+}) {
 
   return(
     <>
@@ -36,12 +47,16 @@ function Graphic({ data, legendLeft, legendBottom, enableArea, curve='natural' }
               legendOffset: -40,
               legendPosition: 'middle'
           }}
+          enableGridX={enableGridX}
+          enableGridY={enableGridY}
+          enablePoints={enablePoints}
           pointSize={10}
           colors={{ scheme: 'category10' }}
         //   pointColor={{ theme: 'background' }}
-          pointColor="#b32323"
+          pointColor={pointColor}
           pointBorderWidth={2}
           pointBorderColor={{ from: 'serieColor' }}
+          enablePointLabel={enablePointLabel}
           pointLabelYOffset={-12}
           useMesh={true}
         //   enablePointLabel={true}

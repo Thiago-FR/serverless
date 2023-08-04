@@ -7,7 +7,7 @@ export const Toggle = ({ label, toggled, onClick }) => {
             <div className='switch-container'>
                 <span>{label}</span>
                 <label className="switch">
-                    <input type="checkbox" checked={toggled} onClick={() => onClick(!toggled)}/>
+                    <input type="checkbox" checked={toggled} onClick={onClick}/>
                     <span className="slider"></span>
                 </label>
             </div>

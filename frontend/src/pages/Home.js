@@ -7,7 +7,7 @@ import { getLocalStore } from '../services/localStore';
 import { getData } from '../services/fetchApi';
 
 import { spinner } from '../img';
-import { Toggle } from '../components/Toggle';
+import SideBar from '../components/SideBar';
 
 const DATA = {
   headcount: {},
@@ -20,13 +20,22 @@ const USER = {
   ano: '2020'
 }
 
+const GRAPHIC_DETAIL = {
+  area: false,
+  curve: true,
+  pointColor: '#b32323',
+  enableGridX: true,
+  enableGridY: true,
+  enablePoints: true,
+  enablePointLabel: false
+}
+
 function Home() {
   const navigate = useNavigate();
   const [data, setData] = useState(DATA);
   const [user, setUser] = useState(USER)
   const [isLoading, setIsLoading] = useState(true)
-  const [graphicsEnableArea, setGraphicsEnableArea] = useState(false)
-  const [graphicsEnableCurve, setGraphicsEnableCurve] = useState(true)
+  const [editGraphic, setEditGrapgic] = useState(GRAPHIC_DETAIL)
 
   useEffect(() => {
     const userEmail = getLocalStore('email');
@@ -47,50 +56,21 @@ function Home() {
     setData(result)
     setIsLoading(false)
   }
+
+  const handleGraphic = (value) => setEditGrapgic({ ...editGraphic, ...value })
  
   return(
     <div>
       <Header nome={user.nome} />
-
+      
       <div className='d-flex'>
-        <aside className='leftBar'>
-          <div className='d-flex flex-column m-5'>
-            <button
-              className='btn btn-primary mt-5 btn-lg'
-              type='button'
-              onClick={() => setUser({ ...user, ano: '2020'})}
-            >
-              2020
-            </button>
-            <button
-              className='btn btn-primary mt-2 btn-lg'
-              type='button'
-              onClick={() => setUser({ ...user, ano: '2021'})}
-            >
-              2021
-            </button>
-            <button
-              className='btn btn-primary mt-2 btn-lg'
-              type='button'
-              onClick={() => setUser({ ...user, ano: '2022'})}
-            >
-              2022
-            </button>
-          </div>
-          <div>
-            <Toggle
-              label="Área"
-              toggled={graphicsEnableArea}
-              onClick={setGraphicsEnableArea}
-            />
-            <Toggle
-              label="Curva"
-              toggled={graphicsEnableCurve}
-              onClick={setGraphicsEnableCurve}
-            />
-          </div>
-        </aside>
-  
+        <SideBar
+          editGraphic={editGraphic}
+          handleGraphic={handleGraphic}
+          setUser={setUser}
+          user={user}
+        />
+
         {isLoading
         ? (
           <div className='loading'>
@@ -103,16 +83,26 @@ function Home() {
                 data={[data.headcount]}
                 legendLeft={'Headcount'}
                 legendBottom={'mês'}
-                enableArea={graphicsEnableArea}
-                curve={graphicsEnableCurve ? 'natural' : 'linear'}
+                enableArea={editGraphic.area}
+                curve={editGraphic.curve ? 'natural' : 'linear'}
+                pointColor={editGraphic.pointColor}
+                enableGridX={editGraphic.enableGridX}
+                enableGridY={editGraphic.enableGridY}
+                enablePoints={editGraphic.enablePoints}
+                enablePointLabel={editGraphic.enablePointLabel}
               />}
             {Object.keys(data.turnover).length > 0 &&
               <Graphic
                 data={[data.turnover]}
                 legendLeft={'Turnover'}
                 legendBottom={'mês'}
-                enableArea={graphicsEnableArea}
-                curve={graphicsEnableCurve ? 'natural' : 'linear'}
+                enableArea={editGraphic.area}
+                curve={editGraphic.curve ? 'natural' : 'linear'}
+                pointColor={editGraphic.pointColor}
+                enableGridX={editGraphic.enableGridX}
+                enableGridY={editGraphic.enableGridY}
+                enablePoints={editGraphic.enablePoints}
+                enablePointLabel={editGraphic.enablePointLabel}
               />}
           </main>
         )}

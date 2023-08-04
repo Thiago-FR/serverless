@@ -1,14 +1,19 @@
 const HOST_ENV = process.env.REACT_APP_HOST;
 
+const POST = {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "*"
+    },
+}
+
 export const getData = async (email, ano) => {
     const data = await fetch(`${HOST_ENV}/role`,
     {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Methods": "*"
-        },
+        ...POST,
+
         body: JSON.stringify({
             email,
             ano
@@ -21,12 +26,8 @@ export const getData = async (email, ano) => {
 export const auth = async (email) => {
     const data = await fetch(`${HOST_ENV}/login`,
     {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Methods": "*"
-        },
+        ...POST,
+        
         body: JSON.stringify({
             email,
         })
